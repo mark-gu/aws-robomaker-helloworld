@@ -157,8 +157,8 @@
     cd ~/environment/HelloWorld/app/scripts
 
     # Add ROS dependencies
-    cp -a deps/* /etc/ros/rosdep/sources.list.d/
-    echo "yaml file:///$(pwd)/jetbot.yaml" > /etc/ros/rosdep/sources.list.d/21-customdepenencies.list
+    sudo cp -a deps/* /etc/ros/rosdep/sources.list.d/
+    echo "yaml file:///$(pwd)/jetbot.yaml" | sudo tee -a /etc/ros/rosdep/sources.list.d/21-customdepenencies.list > /dev/null
 
     # Log in to the an AWS ECR to enable your machine to pull a base Docker image
     $(aws ecr get-login --no-include-email --registry-ids 593875212637 --region us-east-1)
@@ -183,7 +183,7 @@
     cd ~/environment/HelloWorld/app
 
     # Run the Docker container
-    docker run --rm -ti -v $(pwd):/environment/app jetbot-ros
+    docker run --rm -ti -v $(pwd):/environment/jetbot jetbot-ros
 
     # You will be dropped into the shell of the Docker container
     (docker)$ apt update
