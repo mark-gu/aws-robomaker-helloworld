@@ -12,15 +12,18 @@
  For each robot, print robot name, IP address on paper.
  1. laminate iam user name , robot name, IP, and leave the password field empty, so we can wipe and write on it before each session.
 
-### Attendee Preparation
-
-1. Clone the repository from: https://github.com/mark-gu/aws-robomaker-helloworld.git
-2. Navigate to "...\aws-robomaker-helloworld\infrastructure\robomaker\\**cert_generator**", compress all files into a ZIP archive named **cert_generator.zip**
-3. Physically connect to the Jetbot (via HDMI and USB cables), and connect it to the provided WiFi network. Attendees laptops must also join the same network.
-4. Login to the AWS Management Console using assigned username and password.
-
 
 ## Instructions
+
+### Get Ready
+
+1. Clone the repository from: https://github.com/mark-gu/aws-robomaker-helloworld.git
+
+2. Navigate to "...\aws-robomaker-helloworld\infrastructure\robomaker\\**cert_generator**", compress all files into a ZIP archive named **cert_generator.zip**
+
+3. Physically connect to the Jetbot (via HDMI and USB cables), and connect it to the provided WiFi network. Attendees laptops must also join the same network.
+
+4. Login to the AWS Management Console using the provided IAM username and password.
 
 ### Create AWS Resources
 
@@ -224,3 +227,14 @@
 2. Delete all Robot and Fleet Stacks.
 3. Delete files under S3 bucket/robots/ directory.
 4. Deploy empty ROS app to bot???
+
+
+## User Info Card
+
+AWS Management Console:     https://aws-robots.signin.aws.amazon.com/console\
+
+IAM user name:              User1
+IAM user password:          
+
+Jetbot name:                Jetbot1
+Jetbot IP address:          
