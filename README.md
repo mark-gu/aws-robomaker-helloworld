@@ -31,8 +31,8 @@
     **Note**: This step may have already been completed by your instructor.
 
 2. Navigate to **S3**, and click into the bucket deployed in the previous step.
-    - Create a new folder named *utils*
-    - Upload *cert_generator.zip* into the *utils* folder
+    - Create a new directory named *utils*
+    - Upload *cert_generator.zip* into the *utils* directory
 
     **Note**: This step may have already been completed by your instructor.
 
@@ -57,7 +57,7 @@
 
 1. Power up the robot and wait for it to boot up.
 
-2. Copy [resources/90-i2c.rules](resources/90-i2c.rules) to `/path/to/robot_files/` also.
+2. **[SparkFun Jetbot Only]** Copy [resources/90-i2c.rules](resources/90-i2c.rules) to `/path/to/robot_files/` also.
 
 3. Copy all the required files onto the robot.
 
@@ -84,10 +84,10 @@
     # Copy the configuration file to Greengrass
     cp config.json /greengrass/config/
 
-    # Keep the SSH session live and continue to the next step...
+    # Keep the SSH connection alive and continue to the next step...
     ```
 
-5. Update robot devices
+5. **[SparkFun Jetbot Only]** Update robot devices
 
     ```bash
     # Change the owner of the file
@@ -105,12 +105,11 @@
     # You should see permissions like the following:
     # Ensure UID = ggc_user and GID = i2c
     #
-    #              UID      GID 
-    #              ^^^      ^^^ 
+    #              UID      GID
+    #              ^^^      ^^^
     > crw-rw---- 1 ggc_user i2c 89, 1 Nov  8 16:16 /dev/i2c-1
 
-
-    # Keep the SSH session live and continue to the next step...
+    # Keep the SSH connection alive and continue to the next step...
     ```
 
 6. Start Greengrass
@@ -122,31 +121,106 @@
     # Verify Greengrass is running
     ps aux | grep greengrass
 
-    # Terminate the ssh connection
+    # Terminate the SSH connection
     exit # or Ctrl-d
     ```
 
-### Develop the ROS Application
+### Build & Bundle the ROS Application
 
 1. In the AWS Management Console, navigate to **RoboMaker**.
 
-2. Click on **Development environments** on the left, then **Create environment** to create a new development environment.
+2. In the left pane, choose **Development environments**, and then choose **Create environment**.
    - Set *Name* to a value of your choice
    - Set *Pre-installed software suite* to *Melodic*
    - Set other fields appropriately
 
     **Note**: This step may have already been completed by your instructor.
 
-3. Wait until your development environment is ready to use.
+3. Log into the **Cloud9 development environment** once it's ready.
 
+4. Clone this repository in Cloud9.
+
+    ```bash
+    # Change to the environment directory
+    cd ~/environment
+
+    # Clone the project repository
+    git clone https://github.com/mark-gu/aws-robomaker-helloworld.git HelloWorld
+    ```
+
+    **Note**: This step may have already been completed by your instructor.
+
+5. Install application dependencies and build a cross-compilation container.
+
+    ```bash
+    # Change to the scripts directory
+    cd ~/environment/HelloWorld/app/assets/scripts
+
+    # Add ROS dependencies
+    cp -a deps/* /etc/ros/rosdep/sources.list.d/
+    echo "yaml file:///$(pwd)/jetbot.yaml" > /etc/ros/rosdep/sources.list.d/21-customdepenencies.list
+
+    # Log in to the an AWS ECR to enable your machine to pull a base Docker image
+    $(aws ecr get-login --no-include-email --registry-ids 593875212637 --region us-east-1)
+
+    # Install Ubuntu dependencies for cross compilation
+    sudo apt update && sudo apt install -y qemu-user-static
+
+    # Build a Docker container
+    docker build -t jetbot-ros -f Dockerfile .
+
+    # Fix ROS permissions
+    rosdep fix-permissions
+    sudo -u ubuntu rosdep update
+    ```
+
+    **Note**: This step may have already been completed by your instructor.
+
+6. Cross-compile the application.
+
+    ```bash
+    # Change to the application directory
+    cd ~/environment/HelloWorld/app
+
+    # Run the Docker container
+    docker run --rm -ti -v $(pwd):/environment/app jetbot-ros
+
+    # You will be dropped into the shell of the Docker container
+    (docker)$ apt update
+    (docker)$ rosdep fix-permissions && rosdep update
+
+    (docker)$ cd robot_ws
+    (docker)$ rosdep install --from-paths src --ignore-src -r -y
+    (docker)$ colcon build --build-base arm64_build --install-base arm64_install
+    (docker)$ colcon bundle --build-base arm64_build --install-base arm64_install --bundle-base arm64_bundle --apt-sources-list /opt/cross/apt-sources.yaml
+
+    # Wait until shell script is completed...
+
+    # Exit the container
+    (docker)$ exit # or Ctrl-d
+    ```
+
+    **Note**: This step may have already been completed by your instructor.
+
+7. Copy the bundled application to S3.
+
+    ```bash
+    # Make sure you exited out of the container in previous step
+
+    # List all the S3 bucket names
+    aws s3 ls
+
+    # Copy the application to S3
+    aws s3 cp ./robot_ws/arm64_bundle/output.tar s3://<bucket-name>/apps/spinner_bot_<seq-no>.arm64.tar
+    ```
+
+    **Note**: This step may have already been completed by your instructor.
 
 ### Deploy the ROS Application
-
 
 ### Clean up
 
 1. Remove certs, config
 2. Delete all Robot and Fleet Stacks.
-3. Delete files under S3 bucket/robots/ folder.
+3. Delete files under S3 bucket/robots/ directory.
 4. Deploy empty ROS app to bot???
-
