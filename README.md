@@ -228,13 +228,12 @@
 3. Delete files under S3 bucket/robots/ directory.
 4. Deploy empty ROS app to bot???
 
-
 ## User Info Card
 
-AWS Management Console:     https://aws-robots.signin.aws.amazon.com/console\
+AWS Management Console: **https://aws-robots.signin.aws.amazon.com/console**
 
-IAM user name:              User1
+IAM user name:              **User1**  
 IAM user password:          
 
-Jetbot name:                Jetbot1
+Jetbot name:                **Jetbot1**  
 Jetbot IP address:          
