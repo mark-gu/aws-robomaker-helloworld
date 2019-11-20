@@ -1,0 +1,4 @@
+<launch>
+  <node name="move" pkg="spinner_bot" type="move_sparkfun.py" />
+  <node name="circle" pkg="spinner_bot" type="circle_sparkfun.py" />
+</launch>

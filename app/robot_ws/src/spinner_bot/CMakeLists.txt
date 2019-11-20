@@ -2,8 +2,6 @@
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
 cmake_minimum_required(VERSION 2.8.3)
-
-# Mention your package name 
 project(spinner_bot)
 
 ################################################################################
@@ -52,19 +50,20 @@ include_directories(/usr/include/gstreamer-1.0 /usr/include/glib-2.0 /usr/includ
 ################################################################################
 # Install
 ################################################################################
-# Add your custom nodes here. 
-catkin_install_python(PROGRAMS 
+catkin_install_python(PROGRAMS
+  nodes/circle_sparkfun.py
   nodes/circle.py
+  nodes/move_sparkfun.py
   nodes/move.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY launch
-    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(DIRECTORY config
-	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(DIRECTORY deploymentScripts
