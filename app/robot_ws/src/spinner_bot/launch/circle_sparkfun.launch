@@ -1,5 +1,6 @@
 <launch>
   <arg name="aws_region" default="us-west-2" />
+  <arg name="node_start_delay" default="5.0" />
   <arg name="output" default="log" />
 
   <include file="$(find spinner_bot)/launch/aws_cloudwatch_logger.launch">
@@ -9,5 +10,5 @@
     <arg name="log_stream_name" default="SparkFun" />
   </include>
 
-  <node name="circle_sparkfun" pkg="spinner_bot" type="circle_sparkfun.py" output="$(arg output)" />
+  <node name="circle_sparkfun" pkg="spinner_bot" type="circle_sparkfun.py" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " output="$(arg output)" />
 </launch>

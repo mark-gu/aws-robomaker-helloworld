@@ -6,7 +6,7 @@
     <arg name="config_file" value="$(find spinner_bot)/config/aws_cloudwatch_logs_config.yml" />
     <arg name="output" value="$(arg output)" />
     <arg name="aws_region" value="$(arg aws_region)" />
-    <arg name="log_stream_name" default="SparkFun" />
+    <arg name="log_stream_name" default="Waveshare" />
   </include>
 
   <node name="move" pkg="spinner_bot" type="move.py" output="$(arg output)" />
