@@ -157,7 +157,7 @@
 
     ```bash
     # Change to the scripts directory
-    cd ~/environment/HelloWorld/app/scripts
+    cd ~/environment/HelloWorld/app/assets/scripts
 
     # Add ROS dependencies
     sudo cp -a deps/* /etc/ros/rosdep/sources.list.d/
