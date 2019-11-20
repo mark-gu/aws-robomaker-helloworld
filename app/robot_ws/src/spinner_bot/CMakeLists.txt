@@ -37,7 +37,6 @@ catkin_package(
   CATKIN_DEPENDS
     rospy
     std_msgs
-    sensor_msgs
     cloudwatch_logger
 )
 
