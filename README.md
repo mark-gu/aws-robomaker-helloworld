@@ -19,7 +19,7 @@
 
 1. Clone the repository from: https://github.com/mark-gu/aws-robomaker-helloworld.git
 
-2. Navigate to "...\aws-robomaker-helloworld\infrastructure\robomaker\\**cert_generator**", compress all files into a ZIP archive named **cert_generator.zip**
+2. Navigate to "infrastructure\robomaker\\**cert_generator**", compress all files into a ZIP archive named **cert_generator.zip**
 
 3. Physically connect to the Jetbot (via HDMI and USB cables), and connect it to the provided WiFi network. Attendees laptops must also join the same network.
 
@@ -31,19 +31,13 @@
     - Set *Stack name* to *RoboMaker-Common*
     - Save the output values for later use
 
-    **Note**: This step may have already been completed by your instructor.
-
 2. Navigate to **S3**, and click into the bucket deployed in the previous step.
     - Create a new directory named *utils*
     - Upload *cert_generator.zip* into the *utils* directory
 
-    **Note**: This step may have already been completed by your instructor.
-
 3. Navigate to **CloudFormation** and deploy [02-robomaker-cert_generator.yml](infrastructure/robomaker/templates/02-robomaker-cert_generator.yml).
     - Set *Stack name* to *RoboMaker-CertGenerator*
     - Set other parameters appropriately
-
-    **Note**: This step may have already been completed by your instructor.
 
 4. Navigate to **CloudFormation** and deploy [03-robomaker-fleet.yml](infrastructure/robomaker/templates/03-robomaker-fleet.yml).
     - Set *Stack name* to *RoboMaker-Fleet-Jetbots*
@@ -60,7 +54,7 @@
 
 1. Power up the robot and wait for it to boot up.
 
-2. **[SparkFun Jetbot Only]** Copy [resources/90-i2c.rules](resources/90-i2c.rules) to `/path/to/robot_files/` also.
+2. Copy [resources/90-i2c.rules](resources/90-i2c.rules) to `/path/to/robot_files/` also.
 
 3. Copy all the required files onto the robot.
 
@@ -137,8 +131,6 @@
    - Set *Pre-installed software suite* to *Melodic*
    - Set other fields appropriately
 
-    **Note**: This step may have already been completed by your instructor.
-
 3. Log into the **Cloud9 development environment** once it's ready.
 
 4. Clone this repository in Cloud9.
@@ -150,8 +142,6 @@
     # Clone the project repository
     git clone https://github.com/mark-gu/aws-robomaker-helloworld.git HelloWorld
     ```
-
-    **Note**: This step may have already been completed by your instructor.
 
 5. Install application dependencies and build a cross-compilation container.
 
@@ -177,8 +167,6 @@
     sudo -u ubuntu rosdep update
     ```
 
-    **Note**: This step may have already been completed by your instructor.
-
 6. Cross-compile the application.
 
     ```bash
@@ -203,8 +191,6 @@
     (docker)$ exit # or Ctrl-d
     ```
 
-    **Note**: This step may have already been completed by your instructor.
-
 7. Copy the bundled application to S3.
 
     ```bash
@@ -216,8 +202,6 @@
     # Copy the application to S3
     aws s3 cp ./robot_ws/arm64_bundle/output.tar s3://<bucket-name>/apps/spinner_bot_<seq-no>.arm64.tar
     ```
-
-    **Note**: This step may have already been completed by your instructor.
 
 ### Deploy the ROS Application
 
