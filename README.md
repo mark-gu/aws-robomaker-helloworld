@@ -1,18 +1,5 @@
 # AWS RoboMaker Builder Session - Hello World
 
-
-## Preparation
-
-### Instructor Preparation
-
-1. Create 10 environments and 10 IAM users, and share the environments with users.
-2. Deploy RoboMaker-Common and CertGenerator
-3. Setup WiFi connection for all robots.
-
- For each robot, print robot name, IP address on paper.
- 1. laminate iam user name , robot name, IP, and leave the password field empty, so we can wipe and write on it before each session.
-
-
 ## Instructions
 
 ### Get Ready
@@ -84,7 +71,7 @@
     # Keep the SSH connection alive and continue to the next step...
     ```
 
-5. **[SparkFun Jetbot Only]** Update robot devices
+5. Update robot devices
 
     ```bash
     # Change the owner of the file
@@ -205,19 +192,23 @@
 
 ### Deploy the ROS Application
 
+1. In the AWS Management Console, navigate to **RoboMaker**.
+
+2. In the left pane, choose **Robot Applications**, and then choose **Create application**.
+
+3. In the left page, choose **Deployments**, and then choose **Create deployment**.
+
+4. If the deployment is successful, the robot will spin for 10 seconds and stop.
+
 ### Clean up
 
 1. Remove certs, config
 2. Delete all Robot and Fleet Stacks.
 3. Delete files under S3 bucket/robots/ directory.
-4. Deploy empty ROS app to bot???
 
 ## User Info Card
 
 AWS Management Console: **https://aws-robots.signin.aws.amazon.com/console**
-
-IAM user name:              **User1**  
-IAM user password:          
 
 Jetbot name:                **Jetbot1**  
 Jetbot IP address:          
